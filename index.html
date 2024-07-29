@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Game Web App</title>
+    <!-- Подключение шрифта Inter ExtraBold из Google Fonts -->
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@800&display=swap">
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            height: 100vh;
+            background: url('webapp/MINESPP.jpg') no-repeat center center fixed;
+            background-size: cover;
+            font-family: 'Inter', sans-serif; /* Применение шрифта Inter */
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            overflow: hidden; /* Предотвращает появление полос прокрутки */
+            transition: background 0.5s ease; /* Плавное изменение фона */
+        }
+        .image-container {
+            width: 400px; /* Увеличенная ширина контейнера */
+            height: 400px; /* Увеличенная высота контейнера */
+            margin-bottom: 60px; /* Увеличенный отступ между изображением и кнопками */
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            overflow: hidden;
+            border-radius: 15px; /* Увеличенное закругление углов контейнера */
+            position: absolute; /* Позиционирование */
+            top: 100px; /* Понижено немного */
+            display: none; /* Скрыто изначально */
+        }
+        .image-container img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            border-radius: 10px; /* Увеличенное закругление углов изображения */
+            transition: opacity 0.5s ease, transform 0.5s ease; /* Плавное изменение прозрачности и трансформации */
+            transform: scale(1); /* Увеличение изображения */
+        }
+        .fade-out {
+            opacity: 0;
+            transform: scale(0.95); /* Уменьшение изображения при исчезновении */
+        }
+        .fade-in {
+            opacity: 1;
+            transform: scale(1); /* Восстановление изображения при появлении */
+        }
+        .loader {
+            transform: translateZ(1px);
+            width: 120px; /* Увеличенная ширина */
+            height: 120px; /* Увеличенная высота */
+            position: absolute; /* Абсолютное позиционирование для центрирования */
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%); /* Центрирование по вертикали и горизонтали */
+            display: none; /* Спиннер скрыт по умолчанию */
+        }
+        .loader:after {
+            content: '$';
+            display: inline-block;
+            width: 120px; /* Увеличенная ширина */
+            height: 120px; /* Увеличенная высота */
+            border-radius: 50%;
+            text-align: center;
+            line-height: 100px; /* Увеличенная линия высоты */
+            font-size: 80px; /* Увеличенный размер шрифта */
+            font-weight: bold;
+            background: #FFD700;
+            color: #DAA520;
+            border: 4px double;
+            box-sizing: border-box;
+            box-shadow: 2px 2px 2px 1px rgba(0, 0, 0, 0.1);
+            animation: coin-flip 4s cubic-bezier(0, 0.2, 0.8, 1) infinite;
+        }
+        @keyframes coin-flip {
+            0%, 100% {
+                animation-timing-function: cubic-bezier(0.5, 0, 1, 0.5);
+            }
+            0% {
+                transform: rotateY(0deg);
+            }
+            50% {
+                transform: rotateY(1800deg);
+                animation-timing-function: cubic-bezier(0, 0.5, 0.5, 1);
+            }
+            100% {
+                transform: rotateY(3600deg);
+            }
+        }
+        .button-container {
+            display: flex;
+            flex-direction: column; /* Вертикальное расположение кнопок */
+            align-items: center; /* Центрирование кнопок по горизонтали */
+            gap: 40px; /* Увеличенный отступ между кнопками */
+            position: absolute; /* Фиксированное положение кнопок */
+            bottom: 40px; /* Перемещение кнопок ниже */
+        }
+        .game-button {
+            display: block;
+            width: 320px; /* Увеличенная ширина кнопки */
+            padding: 24px; /* Увеличенный padding кнопки */
+            background-color: #FF9900;
+            color: #fff;
+            border: none;
+            border-radius: 20px; /* Увеличенное закругление углов кнопки */
+            cursor: pointer;
+            font-size: 24px; /* Увеличенный размер шрифта */
+            text-align: center;
+            text-decoration: none;
+            font-family: 'Inter', sans-serif; /* Применение шрифта Inter */
+        }
+        .game-button:hover {
+            background-color: #FF9900;
+        }
+        .game-button-small {
+            width: 180px; /* Увеличенная ширина для второй кнопки */
+            padding: 18px; /* Увеличенный padding второй кнопки */
+            background-color: #FD7904; /* Новый цвет кнопки */
+            font-size: 16px; /* Увеличенный размер шрифта */
+        }
+        .game-button-small:hover {
+            background-color: #FD7904; /* Цвет фона при наведении */
+        }
+    </style>
+</head>
+<body>
+    <div class="image-container" id="image-container">
+        <img id="random-image" src="webapp/1.jpg" alt="Random Image">
+        <div id="loader" class="loader"></div> <!-- Спиннер -->
+    </div>
+    <div class="button-container">
+        <a href="#" class="game-button" id="get-signal-button">GET SIGNAL</a>
+        <a href="https://your-game-url.com/another_action" class="game-button game-button-small" target="_blank">GAME HERE</a>
+    </div>
+
+    <script>
+        const images = [
+            'webapp/1.jpg',
+            'webapp/2.jpg',
+            'webapp/3.jpg',
+            'webapp/4.jpg',
+            'webapp/5.jpg'
+        ];
+
+        const imageElement = document.getElementById('random-image');
+        const imageContainer = document.getElementById('image-container');
+        const loaderElement = document.getElementById('loader');
+        const body = document.body;
+
+        document.getElementById('get-signal-button').addEventListener('click', function(event) {
+            event.preventDefault(); // Предотвращает переход по ссылке
+            
+            // Меняем фон
+            body.style.backgroundImage = "url('webapp/NEXT.jpg')";
+            
+            // Показываем контейнер с изображением и спиннер, скрываем изображение
+            imageContainer.style.display = 'flex';
+            loaderElement.style.display = 'block';
+            imageElement.classList.add('fade-out');
+
+            // Задержка для имитации времени загрузки
+            setTimeout(() => {
+                const randomIndex = Math.floor(Math.random() * images.length);
+                const randomImage = images[randomIndex];
+                
+                // Обновляем изображение
+                imageElement.src = randomImage;
+                
+                // Обработчик события для завершения загрузки изображения
+                imageElement.onload = () => {
+                    // Скрываем спиннер и показываем изображение
+                    loaderElement.style.display = 'none';
+                    imageElement.classList.remove('fade-out');
+                    imageElement.classList.add('fade-in');
+                    
+                    // Через 0.5 секунды удаляем класс для повторного использования
+                    setTimeout(() => {
+                        imageElement.classList.remove('fade-in');
+                    }, 500);
+                };
+            }, 500); // Уменьшена задержка до 0.5 секунды
+        });
+    </script>
+</body>
+</html>
