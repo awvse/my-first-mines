@@ -22,8 +22,8 @@
             transition: background 0.5s ease; /* Плавное изменение фона */
         }
         .image-container {
-            width: 300px; /* Уменьшенная ширина контейнера */
-            height: 300px; /* Уменьшенная высота контейнера */
+            width: 350px; /* Увеличенная ширина контейнера */
+            height: 350px; /* Увеличенная высота контейнера */
             margin-bottom: 20px; /* Увеличенный отступ между изображением и кнопками */
             display: flex;
             justify-content: center;
@@ -31,7 +31,8 @@
             overflow: hidden;
             border-radius: 10px; /* Уменьшенное закругление углов контейнера */
             position: absolute; /* Позиционирование */
-            top: 220px; /* Смещение вниз */
+            top: 250px; /* Смещение вниз */
+            display: none; /* Скрыто изначально */
         }
         .image-container img {
             width: 100%;
@@ -100,14 +101,14 @@
         }
         .game-button {
             display: block;
-            width: 320px;
-            padding: 14px;
+            width: 240px; /* Уменьшенная ширина кнопки */
+            padding: 10px; /* Уменьшенный padding кнопки */
             background-color: #FF9900;
             color: #fff;
             border: none;
-            border-radius: 20px;
+            border-radius: 15px; /* Уменьшенное закругление углов кнопки */
             cursor: pointer;
-            font-size: 32px;
+            font-size: 24px; /* Уменьшенный размер шрифта */
             text-align: center;
             text-decoration: none;
             font-family: 'Inter', sans-serif; /* Применение шрифта Inter */
@@ -116,9 +117,10 @@
             background-color: #FF9900;
         }
         .game-button-small {
-            width: 270px; /* Уменьшенная ширина для второй кнопки */
+            width: 200px; /* Уменьшенная ширина для второй кнопки */
+            padding: 8px; /* Уменьшенный padding второй кнопки */
             background-color: #FD7904; /* Новый цвет кнопки */
-            font-size: 28px; /* Уменьшенный размер шрифта */
+            font-size: 20px; /* Уменьшенный размер шрифта */
         }
         .game-button-small:hover {
             background-color: #e06e3d; /* Цвет фона при наведении */
@@ -126,7 +128,7 @@
     </style>
 </head>
 <body>
-    <div class="image-container">
+    <div class="image-container" id="image-container">
         <img id="random-image" src="webapp/1.jpg" alt="Random Image">
         <div id="loader" class="loader"></div> <!-- Спиннер -->
     </div>
@@ -145,6 +147,7 @@
         ];
 
         const imageElement = document.getElementById('random-image');
+        const imageContainer = document.getElementById('image-container');
         const loaderElement = document.getElementById('loader');
         const body = document.body;
 
@@ -153,8 +156,9 @@
             
             // Меняем фон
             body.style.backgroundImage = "url('webapp/NEXT.jpg')";
-
-            // Показываем спиннер и скрываем изображение
+            
+            // Показываем контейнер с изображением и спиннер, скрываем изображение
+            imageContainer.style.display = 'flex';
             loaderElement.style.display = 'block';
             imageElement.classList.add('fade-out');
 
