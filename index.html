@@ -22,8 +22,8 @@
             transition: background 0.5s ease; /* Плавное изменение фона */
         }
         .image-container {
-            width: 320px; /* Увеличенная ширина контейнера */
-            height: 320px; /* Увеличенная высота контейнера */
+            width: 315px; /* Уменьшенная ширина контейнера */
+            height: 315px; /* Уменьшенная высота контейнера */
             margin-bottom: 40px; /* Уменьшенный отступ между изображением и кнопками */
             display: flex;
             justify-content: center;
@@ -40,6 +40,7 @@
             object-fit: cover;
             border-radius: 5px; /* Уменьшенное закругление углов изображения */
             transition: opacity 0.5s ease, transform 0.5s ease; /* Плавное изменение прозрачности и трансформации */
+            transform: scale(0.97); /* Немного уменьшить изображение */
         }
         .fade-out {
             opacity: 0;
@@ -101,14 +102,14 @@
         }
         .game-button {
             display: block;
-            width: 300px; /* Уменьшенная ширина кнопки */
-            padding: 12px; /* Уменьшенный padding кнопки */
+            width: 280px; /* Уменьшенная ширина кнопки */
+            padding: 10px; /* Уменьшенный padding кнопки */
             background-color: #FF9900;
             color: #fff;
             border: none;
             border-radius: 15px; /* Уменьшенное закругление углов кнопки */
             cursor: pointer;
-            font-size: 26px; /* Уменьшенный размер шрифта */
+            font-size: 22px; /* Уменьшенный размер шрифта */
             text-align: center;
             text-decoration: none;
             font-family: 'Inter', sans-serif; /* Применение шрифта Inter */
@@ -117,10 +118,10 @@
             background-color: #FF9900;
         }
         .game-button-small {
-            width: 290px; /* Уменьшенная ширина для второй кнопки */
-            padding: 10px; /* Уменьшенный padding второй кнопки */
+            width: 270px; /* Уменьшенная ширина для второй кнопки */
+            padding: 8px; /* Уменьшенный padding второй кнопки */
             background-color: #FD7904; /* Новый цвет кнопки */
-            font-size: 22px; /* Уменьшенный размер шрифта */
+            font-size: 20px; /* Уменьшенный размер шрифта */
         }
         .game-button-small:hover {
             background-color: #e06e3d; /* Цвет фона при наведении */
@@ -139,11 +140,11 @@
 
     <script>
         const images = [
-            'MINES/1.jpg',
-            'MINES/2.jpg',
-            'MINES/3.jpg',
-            'MINES/4.jpg',
-            'MINES/5.jpg'
+            'webapp/1.jpg',
+            'webapp/2.jpg',
+            'webapp/3.jpg',
+            'webapp/4.jpg',
+            'webapp/5.jpg'
         ];
 
         const imageElement = document.getElementById('random-image');
